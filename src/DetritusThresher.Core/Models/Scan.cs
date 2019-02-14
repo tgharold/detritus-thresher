@@ -1,7 +1,7 @@
 using System;
 using NPoco;
 
-namespace Hunter2.Core.Model
+namespace DetritusThresher.Core.Models
 {
     [TableName("Scans")]
     public class Scan
@@ -11,5 +11,6 @@ namespace Hunter2.Core.Model
         public FolderScan StartingFolder { get; set; }
 
         public DateTimeOffset ScanCreated { get; set; } = DateTimeOffset.UtcNow;
+        public DateTimeOffset? ScanFinished { get; set; }
     }
 }

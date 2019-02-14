@@ -1,7 +1,7 @@
 using System;
 using NPoco;
 
-namespace Hunter2.Core.Model
+namespace DetritusThresher.Core.Models
 {
     [TableName("FileScans")]
     public class FileScan
@@ -13,6 +13,14 @@ namespace Hunter2.Core.Model
         public string Uri { get; set; }
         public string Name { get; set; }
 
+        public long Bytes { get; set; }
+        public DateTimeOffset? Created { get; set; }
+        public DateTimeOffset? Modified { get; set; }
+
+        public string BeginningHashSha256 { get; set; }
+        public string CompleteHashSha256 { get; set; }
+
         public DateTimeOffset ScanCreated { get; set; } = DateTimeOffset.UtcNow;
+        public DateTimeOffset? ScanFinished { get; set; }
     }
 }
