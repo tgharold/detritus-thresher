@@ -7,7 +7,25 @@ namespace DetritusThresher.Migrations.Migrations
     {
         public override void Up()
         {
-            throw new System.NotImplementedException();
+            Create.Table("Log")
+                .WithColumn("Id")
+                    .AsInt64()
+                    .PrimaryKey()
+                    .Identity()
+                .WithColumn("Severity")
+                    .AsString("10")
+                    .NotNullable()
+                .WithColumn("Category")
+                    .AsString("10")
+                    .NotNullable()
+                .WithColumn("Created")
+                    .AsDateTimeOffset()
+                    .NotNullable()
+                    .WithDefaultValue(SystemMethods.CurrentDateTime)
+                .WithColumn("Message")
+                    .AsString()
+                    .Nullable()
+                ;
         }
     }
 }
