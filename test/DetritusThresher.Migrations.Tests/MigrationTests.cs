@@ -3,6 +3,8 @@ using Microsoft.Extensions.Logging;
 using FluentMigrator;
 using System;
 using Xunit;
+using DetritusThresher.Migrations.Migrations;
+using FluentMigrator.Runner;
 
 namespace DetritusThresher.Migrations.Tests
 {
@@ -17,7 +19,7 @@ namespace DetritusThresher.Migrations.Tests
                     builder => builder
                         .AddSQLite()
                         .WithGlobalConnectionString(@"Data Source=:memory:;Version=3;New=True;")
-                        .WithMigrationsIn(typeof(MigrationDate20181026113000Zero).Assembly))
+                        .WithMigrationsIn(typeof(InitialMigration).Assembly))
                 .BuildServiceProvider();
         }
 
@@ -35,7 +37,7 @@ namespace DetritusThresher.Migrations.Tests
             var dataSet = runner.Processor.Read(sqlStatement, string.Empty);
 
             Assert.NotNull(dataSet);
-            Assert.True("foo", dataSet.Tables[0].Rows[0].ItemArray[0]);
+            Assert.Equal("foo", dataSet.Tables[0].Rows[0].ItemArray[0]);
         }
     }
 }
