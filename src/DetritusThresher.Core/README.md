@@ -1,3 +1,5 @@
+# DetritusThresher.Core
+
 ## SQLite issues
 
 ### DateTimeOffset / DateTime
