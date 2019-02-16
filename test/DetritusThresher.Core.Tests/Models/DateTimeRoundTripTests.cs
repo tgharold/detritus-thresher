@@ -9,6 +9,7 @@ using DetritusThresher.Core.Models;
 using FluentMigrator.Runner;
 using Microsoft.Data.Sqlite;
 using DetritusThresher.Core.Database;
+using System.Data.Common;
 
 namespace DetritusThresher.Core.Tests.Models
 {
@@ -18,17 +19,15 @@ namespace DetritusThresher.Core.Tests.Models
         {
             var sc = new ServiceCollection();
 
-            var dbConnectionFactory = new SqliteDbConnectionFactory(
-                @"Data Source=:memory:"
-                );
-
-            sc.AddSingleton<SqliteDbConnectionFactory>(dbConnectionFactory);
-
             sc.AddLogging(lb => lb.AddFluentMigratorConsole());
 
-            using (var dbConnection = dbConnectionFactory.GetConnection())
+            var connectionString = @"Data Source=:memory:";
+
+            var dbProvider = DbProviderFactories.GetFactory("System.Data.SqLite");
+            using (var dbConnection = dbProvider.CreateConnection())
             {
-                var dbConnectionString = dbConnection.ConnectionString;
+                dbConnection.ConnectionString = connectionString;
+
                 sc.AddFluentMigratorCore()
                     .ConfigureRunner(
                         builder => builder

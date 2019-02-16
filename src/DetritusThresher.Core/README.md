@@ -2,6 +2,10 @@
 
 ## SQLite issues
 
+### In-Memory Databases
+
+In-memory databases only exist for as long as there is a single connection.
+
 ### DateTimeOffset / DateTime
 
 - https://www.sqlite.org/datatype3.html#date_and_time_datatype
