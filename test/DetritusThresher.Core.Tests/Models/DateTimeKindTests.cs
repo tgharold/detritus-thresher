@@ -31,6 +31,7 @@ namespace DetritusThresher.Core.Tests.Models
         public void LogEntry_Created_defaults_to_correct_kind()
         {
             var x = new LogEntry();
-            Assert.Equal(DateTimeKind.Utc, x.Created?.Kind);        }
+            Assert.Equal(DateTimeKind.Utc, x.Created?.Kind);        
+        }
     }
 }

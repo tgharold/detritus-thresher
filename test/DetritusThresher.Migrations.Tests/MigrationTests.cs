@@ -10,6 +10,8 @@ namespace DetritusThresher.Migrations.Tests
 {
     public class MigrationTests
     {
+        //TODO: parameterize tests to check against various back end databases
+
         private ServiceProvider CreateServiceProvider()
         {
             return new ServiceCollection()
