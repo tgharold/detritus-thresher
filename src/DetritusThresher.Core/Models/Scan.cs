@@ -10,7 +10,7 @@ namespace DetritusThresher.Core.Models
         
         public FolderScan StartingFolder { get; set; }
 
-        public DateTimeOffset ScanCreated { get; set; } = DateTimeOffset.UtcNow;
-        public DateTimeOffset? ScanFinished { get; set; }
+        public DateTime ScanCreated { get; set; } = DateTime.UtcNow;
+        public DateTime? ScanFinished { get; set; }
     }
 }

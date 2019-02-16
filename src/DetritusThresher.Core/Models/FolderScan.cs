@@ -13,10 +13,10 @@ namespace DetritusThresher.Core.Models
         public string Uri { get; set; }
         public string Name { get; set; }
 
-        public DateTimeOffset? Created { get; set; }
-        public DateTimeOffset? Modified { get; set; }
+        public DateTime? Created { get; set; }
+        public DateTime? Modified { get; set; }
 
-        public DateTimeOffset ScanCreated { get; set; } = DateTimeOffset.UtcNow;
-        public DateTimeOffset? ScanFinished { get; set; }
+        public DateTime ScanCreated { get; set; } = DateTime.UtcNow;
+        public DateTime? ScanFinished { get; set; }
     }
 }

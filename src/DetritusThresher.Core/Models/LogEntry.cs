@@ -1,12 +1,14 @@
 using System;
+using NPoco;
 
 namespace DetritusThresher.Core.Models
 {
-    public class Log
+    [TableName("Log")]
+    public class LogEntry
     {
         public long Id { get; set; }
 
-        public DateTimeOffset? Created { get; set; } = DateTimeOffset.UtcNow;
+        public DateTime? Created { get; set; } = DateTime.UtcNow;
 
         public int Severity { get; set; }
         public string SeverityName { get; set; }

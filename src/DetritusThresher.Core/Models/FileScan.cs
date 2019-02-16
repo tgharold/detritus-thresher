@@ -15,13 +15,13 @@ namespace DetritusThresher.Core.Models
 
         public long Bytes { get; set; }
 
-        public DateTimeOffset? Created { get; set; }
-        public DateTimeOffset? Modified { get; set; }
+        public DateTime? Created { get; set; }
+        public DateTime? Modified { get; set; }
 
         public string BeginningHashSha256 { get; set; }
         public string CompleteHashSha256 { get; set; }
 
-        public DateTimeOffset ScanCreated { get; set; } = DateTimeOffset.UtcNow;
-        public DateTimeOffset? ScanFinished { get; set; }
+        public DateTime ScanCreated { get; set; } = DateTime.UtcNow;
+        public DateTime? ScanFinished { get; set; }
     }
 }
