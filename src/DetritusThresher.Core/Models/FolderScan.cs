@@ -1,5 +1,6 @@
 using System;
 using NPoco;
+using SQLite.Net.DateTimeOffset.Attributes;
 
 namespace DetritusThresher.Core.Models
 {
@@ -13,10 +14,14 @@ namespace DetritusThresher.Core.Models
         public string Uri { get; set; }
         public string Name { get; set; }
 
+        [DateTimeOffsetSerialize]
         public DateTimeOffset? Created { get; set; }
+        [DateTimeOffsetSerialize]
         public DateTimeOffset? Modified { get; set; }
 
+        [DateTimeOffsetSerialize]
         public DateTimeOffset ScanCreated { get; set; } = DateTimeOffset.UtcNow;
+        [DateTimeOffsetSerialize]
         public DateTimeOffset? ScanFinished { get; set; }
     }
 }

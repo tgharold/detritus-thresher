@@ -18,7 +18,7 @@ namespace DetritusThresher.Migrations.Tests
                 .ConfigureRunner(
                     builder => builder
                         .AddSQLite()
-                        .WithGlobalConnectionString(@"Data Source=:memory:;Version=3;New=True;")
+                        .WithGlobalConnectionString(@"Data Source=:memory:")
                         .WithMigrationsIn(typeof(InitialMigration).Assembly))
                 .BuildServiceProvider();
         }
@@ -30,7 +30,7 @@ namespace DetritusThresher.Migrations.Tests
             var scope = serviceProvider.CreateScope();
             var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
 
-            runner.MigrateUp(1);
+            runner.MigrateUp();
 
             string sqlStatement = "SELECT Description FROM VersionInfo";
 
