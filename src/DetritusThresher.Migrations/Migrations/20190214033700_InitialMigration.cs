@@ -7,6 +7,9 @@ namespace DetritusThresher.Migrations.Migrations
     {
         public override void Up()
         {
+            // IfDatabase("sqlite")...
+            // https://fluentmigrator.github.io/articles/multi-db-support.html
+
             Create.Table("Log")
                 .WithColumn("Id")
                     .AsInt64()
@@ -16,13 +19,13 @@ namespace DetritusThresher.Migrations.Migrations
                     .AsInt32()
                     .NotNullable()
                 .WithColumn("SeverityName")
-                    .AsString("10")
+                    .AsString(10)
                     .NotNullable()
                 .WithColumn("Category")
-                    .AsString("10")
+                    .AsString(10)
                     .NotNullable()
                 .WithColumn("Created")
-                    .AsDateTimeOffset()
+                    .AsDateTime()
                     .NotNullable()
                     .WithDefaultValue(SystemMethods.CurrentDateTime)
                 .WithColumn("Message")

@@ -37,7 +37,7 @@ namespace DetritusThresher.Migrations.Tests
             var dataSet = runner.Processor.Read(sqlStatement, string.Empty);
 
             Assert.NotNull(dataSet);
-            Assert.Equal("foo", dataSet.Tables[0].Rows[0].ItemArray[0]);
+            Assert.Equal(nameof(InitialMigration), dataSet.Tables[0].Rows[0].ItemArray[0]);
         }
     }
 }
