@@ -27,7 +27,8 @@ namespace DetritusThresher.Core.Tests.Models
             using (var dbConnection = dbProvider.CreateConnection())
             {
                 dbConnection.ConnectionString = connectionString;
-
+                
+                var dbConnectionString = dbConnection.ConnectionString;
                 sc.AddFluentMigratorCore()
                     .ConfigureRunner(
                         builder => builder
@@ -48,7 +49,7 @@ namespace DetritusThresher.Core.Tests.Models
             var scope = serviceProvider.CreateScope();
             var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
             runner.MigrateUp();
-            var dbConnectionFactory = scope.ServiceProvider.GetRequiredService<SqliteDbConnectionFactory>();
+            var dbConnectionFactory = scope.ServiceProvider.GetRequiredService<SqliteDatabase>();
 
             var date = DateTime.Parse(input);
             var x = new LogEntry{
