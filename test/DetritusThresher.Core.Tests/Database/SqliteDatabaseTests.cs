@@ -52,7 +52,7 @@ namespace DetritusThresher.Core.Tests.Database
                     infoCommand.CommandText = 
                         $"SELECT name FROM sqlite_master WHERE type='table' and name='{tableName}'";
                     var reader = infoCommand.ExecuteReader();
-                    Assert.True(reader.Read());
+                    Assert.True(reader.Read(), $"Failed to find table in {nameof(conn2)} connection.");
                     var foundTableName = reader.GetString(0);
                     Assert.Equal(tableName, foundTableName);
 

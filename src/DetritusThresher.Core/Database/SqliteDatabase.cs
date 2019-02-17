@@ -19,12 +19,13 @@ namespace DetritusThresher.Core.Database
             };
             
             _holdOpenConnection = new SqliteConnection(csb.ToString());
+            _holdOpenConnection.Open();
         }
 
         public DbConnection GetConnection()
         {
-            var dataSource = _holdOpenConnection.DataSource;
-            return new SqliteConnection(dataSource);
+            var connectionString = _holdOpenConnection.ConnectionString;
+            return new SqliteConnection(connectionString);
         }
 
         #region IDisposable Support
