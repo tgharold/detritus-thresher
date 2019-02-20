@@ -1,8 +1,6 @@
-using DetritusThresher.Testing.Constants;
-using DetritusThresher.Testing.Fixtures;
 using Xunit;
 
-namespace DetritusThresher.Testing.CollectionFixtures
+namespace DetritusThresher.Core.Tests.Xunit
 {
     [CollectionDefinition(CollectionFixtureNames.Sqlite)]
     public class SqliteCollection : ICollectionFixture<SqliteFixture>

@@ -12,4 +12,9 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\DetritusThresher.Core\DetritusThresher.Core.csproj" />
+    <ProjectReference Include="..\..\src\DetritusThresher.Migrations\DetritusThresher.Migrations.csproj" />
+  </ItemGroup>
+
 </Project>
