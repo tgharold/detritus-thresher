@@ -1,4 +1,6 @@
+using System;
 using DetritusThresher.Core.Database;
+using Microsoft.Data.Sqlite;
 using Xunit;
 
 namespace DetritusThresher.Core.Tests.Database
@@ -17,7 +19,7 @@ namespace DetritusThresher.Core.Tests.Database
         [Fact] 
         public void CanGetConnectionToExistingDatabase()
         {
-            const string tableName = nameof(CanGetConnectionToExistingDatabase);
+            var tableName = $"test_{nameof(CanGetConnectionToExistingDatabase)}_{DateTimeOffset.UtcNow.Ticks}";
             const string fieldName = "Id";
 
             using(var db = new SqliteDatabase())
@@ -26,37 +28,52 @@ namespace DetritusThresher.Core.Tests.Database
                 {
                     conn1.Open();
 
-                    var createCommand = conn1.CreateCommand();
-                    createCommand.CommandText = $"create table {tableName} ({fieldName} INTEGER);";
-                    createCommand.ExecuteNonQuery();
+                    using (var createCommand = conn1.CreateCommand())
+                    {
+                        createCommand.CommandText = $"create table @tableName (@fieldName INTEGER);";
+                        createCommand.Parameters.Add(new SqliteParameter{
+                            ParameterName = "@tableName",
+                            Value = tableName,
+                        });
+                        createCommand.Parameters.Add(new SqliteParameter{
+                            ParameterName = "@fieldName",
+                            Value = fieldName,
+                        });
+                        createCommand.ExecuteNonQuery();
+                    }
 
-                    // https://www.sqlite.org/fileformat.html#storage_of_the_sql_database_schema
-                    // column names: type, name, tbl_name, rootpage, sql
+                    using (var infoCommand = conn1.CreateCommand())
+                    {
+                        // https://www.sqlite.org/fileformat.html#storage_of_the_sql_database_schema
+                        // column names: type, name, tbl_name, rootpage, sql
 
-                    var infoCommand = conn1.CreateCommand();
-                    infoCommand.CommandText = 
-                        $"SELECT name FROM sqlite_master WHERE type='table' and name='{tableName}'";
-                    var reader = infoCommand.ExecuteReader();
-                    Assert.True(reader.Read());
-                    var foundTableName = reader.GetString(0);
-                    Assert.Equal(tableName, foundTableName);
+                        infoCommand.CommandText = 
+                            $"SELECT name FROM sqlite_master WHERE type='table' and name='@tableName'";
+                        infoCommand.Parameters.Add(new SqliteParameter{
+                            ParameterName = "@tableName",
+                            Value = tableName,
+                        });
+                        var reader = infoCommand.ExecuteReader();
+                        Assert.True(reader.Read());
 
-                    conn1.Close();
+                        var foundTableName = reader.GetString(0);
+                        Assert.Equal(tableName, foundTableName);
+                    }
                 }   
 
                 using (var conn2 = db.GetConnection())
                 {
                     conn2.Open();
 
-                    var infoCommand = conn2.CreateCommand();
-                    infoCommand.CommandText = 
-                        $"SELECT name FROM sqlite_master WHERE type='table' and name='{tableName}'";
-                    var reader = infoCommand.ExecuteReader();
-                    Assert.True(reader.Read(), $"Failed to find table in {nameof(conn2)} connection.");
-                    var foundTableName = reader.GetString(0);
-                    Assert.Equal(tableName, foundTableName);
-
-                    conn2.Close();
+                    using (var infoCommand = conn2.CreateCommand())
+                    {
+                        infoCommand.CommandText = 
+                            $"SELECT name FROM sqlite_master WHERE type='table' and name='{tableName}'";
+                        var reader = infoCommand.ExecuteReader();
+                        Assert.True(reader.Read(), $"Failed to find table in {nameof(conn2)} connection.");
+                        var foundTableName = reader.GetString(0);
+                        Assert.Equal(tableName, foundTableName);
+                    }
                 }
             }
         }
