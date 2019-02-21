@@ -15,6 +15,10 @@ namespace DetritusThresher.Core.Tests.Xunit
 
         public SqliteFixture()
         {
+            var dbName = DateTimeOffset.UtcNow.Ticks.ToString().PadLeft(10, '0');
+            dbName = dbName.Substring(dbName.Length-10);
+            var connString = $"Data Source=file:mem{dbName}?mode=memory&cache=shared";
+
             _database = new SqliteDatabase();
 
             var serviceProvider = new ServiceCollection()

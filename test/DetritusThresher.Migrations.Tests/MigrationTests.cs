@@ -12,9 +12,7 @@ namespace DetritusThresher.Migrations.Tests
     {
         //TODO: parameterize tests to check against various back end databases
 
-        private const string connectionString = @"Data Source=file:memMigrationTest?mode=memory&cache=shared";
-
-        private ServiceProvider CreateServiceProvider()
+        private ServiceProvider CreateServiceProvider(string connectionString)
         {
             return new ServiceCollection()
                 .AddLogging(lb => lb.AddFluentMigratorConsole())
@@ -30,7 +28,11 @@ namespace DetritusThresher.Migrations.Tests
         [Fact]
         public void CanRunMigrations()
         {
-            var serviceProvider = this.CreateServiceProvider();
+            var dbName = DateTimeOffset.UtcNow.Ticks.ToString().PadLeft(10, '0');
+            dbName = dbName.Substring(dbName.Length-10);
+            var connString = $"Data Source=file:memMigrateTest{dbName}?mode=memory&cache=shared";
+            
+            var serviceProvider = this.CreateServiceProvider(connString);
 
             using (var scope = serviceProvider.CreateScope())
             {
