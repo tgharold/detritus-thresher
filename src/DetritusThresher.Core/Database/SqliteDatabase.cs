@@ -9,14 +9,20 @@ namespace DetritusThresher.Core.Database
 {
     public class SqliteDatabase : IDisposable
     {
+        /// <summary>
+        /// Sqlite will close/delete memory/temporary databases when the last connection
+        /// is closed. We use a hidden connection variable to keep the database
+        /// intact until we no longer need it.
+        /// </summary>
         private SqliteConnection _holdOpenConnection;
 
         // Sqlite in-memory: https://www.sqlite.org/inmemorydb.html
+        // Use a "named" memory string with shared cache.
 
         //TODO: take in a connection string on ctor
         public SqliteDatabase()
         {
-            _holdOpenConnection = new SqliteConnection(@"Data Source=file:memdb1?mode=memory&cache=shared");
+            _holdOpenConnection = new SqliteConnection(@"Data Source=file:memDT2019?mode=memory&cache=shared");
             _holdOpenConnection.Open();
         }
 
@@ -40,31 +46,16 @@ namespace DetritusThresher.Core.Database
             {
                 if (disposing)
                 {
-                    // TODO: dispose managed state (managed objects).
                     _holdOpenConnection.Close();
                     _holdOpenConnection.Dispose();
                 }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
                 disposedValue = true;
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~SqliteDatabase() {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
-
-        // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
         }
         #endregion
     }
