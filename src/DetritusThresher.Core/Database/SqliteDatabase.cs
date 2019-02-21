@@ -11,15 +11,18 @@ namespace DetritusThresher.Core.Database
     {
         private SqliteConnection _holdOpenConnection;
 
-//TODO: take in a connection string
+        // Sqlite in-memory: https://www.sqlite.org/inmemorydb.html
+
+        //TODO: take in a connection string on ctor
         public SqliteDatabase()
         {
-            var csb = new SqliteConnectionStringBuilder{
-                DataSource = @"Data Source=:memory:"
-            };
-            
-            _holdOpenConnection = new SqliteConnection(csb.ToString());
+            _holdOpenConnection = new SqliteConnection(@"Data Source=file:memdb1?mode=memory&cache=shared");
             _holdOpenConnection.Open();
+        }
+
+        public string GetConnectionString()
+        {
+            return _holdOpenConnection.ConnectionString;
         }
 
         public DbConnection GetConnection()
