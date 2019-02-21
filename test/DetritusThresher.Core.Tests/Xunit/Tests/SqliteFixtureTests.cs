@@ -8,8 +8,22 @@ namespace DetritusThresher.Core.Tests.Xunit.Tests
         [Fact]
         public void CanCreateFixture()
         {
-            var fixture = new SqliteFixture();
-            Assert.NotNull(fixture);
+            using (var fixture = new SqliteFixture())
+            {
+                Assert.NotNull(fixture);
+            }
+        }
+
+        [Fact]
+        public void CanGetConnection()
+        {
+            using (var fixture = new SqliteFixture())
+            {
+                using (var conn = fixture.GetConnection())
+                {
+                    Assert.NotNull(conn);
+                }
+            }
         }
     }
 }
