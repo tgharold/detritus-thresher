@@ -12,6 +12,8 @@ namespace DetritusThresher.Migrations.Tests
     {
         //TODO: parameterize tests to check against various back end databases
 
+        private const string connectionString = @"Data Source=file:memMigrationTest?mode=memory&cache=shared";
+
         private ServiceProvider CreateServiceProvider()
         {
             return new ServiceCollection()
@@ -20,7 +22,7 @@ namespace DetritusThresher.Migrations.Tests
                 .ConfigureRunner(
                     builder => builder
                         .AddSQLite()
-                        .WithGlobalConnectionString(@"Data Source=:memory:")
+                        .WithGlobalConnectionString(connectionString)
                         .WithMigrationsIn(typeof(InitialMigration).Assembly))
                 .BuildServiceProvider();
         }
@@ -29,17 +31,19 @@ namespace DetritusThresher.Migrations.Tests
         public void CanRunMigrations()
         {
             var serviceProvider = this.CreateServiceProvider();
-            var scope = serviceProvider.CreateScope();
-            var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
 
-            runner.MigrateUp();
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
+                runner.MigrateUp();
 
-            string sqlStatement = "SELECT Description FROM VersionInfo";
+                string sqlStatement = "SELECT Description FROM VersionInfo";
 
-            var dataSet = runner.Processor.Read(sqlStatement, string.Empty);
+                var dataSet = runner.Processor.Read(sqlStatement, string.Empty);
 
-            Assert.NotNull(dataSet);
-            Assert.Equal(nameof(InitialMigration), dataSet.Tables[0].Rows[0].ItemArray[0]);
+                Assert.NotNull(dataSet);
+                Assert.Equal(nameof(InitialMigration), dataSet.Tables[0].Rows[0].ItemArray[0]);
+            }
         }
     }
 }

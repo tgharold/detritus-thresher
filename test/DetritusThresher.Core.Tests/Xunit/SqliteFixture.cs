@@ -22,14 +22,15 @@ namespace DetritusThresher.Core.Tests.Xunit
                 .ConfigureRunner(
                     builder => builder
                         .AddSQLite()
-                        .WithGlobalConnectionString(@"Data Source=:memory:")
+                        .WithGlobalConnectionString(_database.GetConnectionString())
                         .WithMigrationsIn(typeof(InitialMigration).Assembly))
                 .BuildServiceProvider();
 
-            var scope = serviceProvider.CreateScope();
-            var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
-
-            runner.MigrateUp();
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
+                runner.MigrateUp();
+            }
         }
 
         public DbConnection GetConnection()

@@ -5,7 +5,7 @@ using Xunit;
 
 namespace DetritusThresher.Core.Tests.Database
 {
-    [Collection(nameof(SqliteCollection))]
+    [Collection(CollectionFixtureNames.Sqlite)]
     public class SqliteDatabaseTests : IDisposable
     {
         private readonly DbConnection _db;
