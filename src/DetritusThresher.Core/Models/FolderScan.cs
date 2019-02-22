@@ -3,10 +3,10 @@ using NPoco;
 
 namespace DetritusThresher.Core.Models
 {
-    [TableName("FolderScans")]
+    [TableName("FolderScans"), PrimaryKey("FolderScanId")]
     public class FolderScan
     {
-        public long Id { get; set; }
+        public long FolderScanId { get; set; }
         public long? ParentId { get; set; }
         public int ScanId { get; set; }
 
