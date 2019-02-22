@@ -37,6 +37,7 @@ namespace DetritusThresher.Migrations.Tests
             using (var scope = serviceProvider.CreateScope())
             {
                 var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
+                runner.ListMigrations();
                 runner.MigrateUp();
 
                 string sqlStatement = "SELECT Description FROM VersionInfo";

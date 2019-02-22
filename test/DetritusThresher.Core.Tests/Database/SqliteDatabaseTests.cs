@@ -12,7 +12,7 @@ namespace DetritusThresher.Core.Tests.Database
 
         public SqliteDatabaseTests(SqliteFixture fixture)
         {
-            _db = fixture?.GetConnection();
+            _db = fixture.GetConnection();
             _db.Open();
         }
 

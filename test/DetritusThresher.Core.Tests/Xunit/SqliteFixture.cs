@@ -15,18 +15,17 @@ namespace DetritusThresher.Core.Tests.Xunit
 
         public SqliteFixture()
         {
-            var dbName = DateTimeOffset.UtcNow.Ticks.ToString().PadLeft(10, '0');
-            dbName = dbName.Substring(dbName.Length-10);
-            var connString = $"Data Source=file:mem{dbName}?mode=memory&cache=shared";
+            var dbName = Guid.NewGuid().ToString();
+            var connString = $"Data Source=file:mem-{dbName}?mode=memory&cache=shared";
 
-            _database = new SqliteDatabase();
+            _database = new SqliteDatabase(connString);
 
             var serviceProvider = new ServiceCollection()
                 .AddFluentMigratorCore()
                 .ConfigureRunner(
                     builder => builder
                         .AddSQLite()
-                        .WithGlobalConnectionString(_database.GetConnectionString())
+                        .WithGlobalConnectionString(connString)
                         .WithMigrationsIn(typeof(InitialMigration).Assembly))
                 .BuildServiceProvider();
 

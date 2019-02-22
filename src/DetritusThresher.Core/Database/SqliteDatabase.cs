@@ -19,10 +19,9 @@ namespace DetritusThresher.Core.Database
         // Sqlite in-memory: https://www.sqlite.org/inmemorydb.html
         // Use a "named" memory string with shared cache.
 
-        //TODO: take in a connection string on ctor
-        public SqliteDatabase()
+        public SqliteDatabase(string connectionString)
         {
-            _holdOpenConnection = new SqliteConnection(@"Data Source=file:memDT2019?mode=memory&cache=shared");
+            _holdOpenConnection = new SqliteConnection(connectionString);
             _holdOpenConnection.Open();
         }
 
