@@ -50,5 +50,46 @@ namespace DetritusThresher.Core.Tests.Models
                 Assert.Equal(fileName, result.Name);
             }
         }
+
+        [Fact]
+        public void CanCreateMultiplesAndSave()
+        {
+            var scanName = $"test scanName: {nameof(CanCreateMultiplesAndSave)} {DateTimeOffset.UtcNow.Ticks}";
+            var scan = ModelBuilders.CreateScan(scanName);
+
+            string lastFolderName = null;
+            long lastFileId = 0;
+            string lastFileName = null;
+        
+            using (var db = new NPoco.Database(connection, DatabaseType.SQLite))
+            {
+                db.Insert(scan);
+
+                for (var i = 0; i <= 9; i++)
+                {
+                    var folder = ModelBuilders.CreateFolderScan($"Folder-{i}-{Guid.NewGuid()}", string.Empty);
+                    folder.ScanId = scan.Id;
+                    db.Insert(folder);
+
+                    lastFolderName = folder.Name;
+
+                    for (var j = 0; j <= 9; j++)
+                    {
+                        var file = ModelBuilders.CreateFileScan($"File-{i}-{j}-{Guid.NewGuid()}", string.Empty);
+                        file.ScanId = scan.Id;
+                        file.ParentFolderId = folder.Id;
+                        db.Insert(file);
+
+                        lastFileId = file.Id;
+                        lastFileName = file.Name;
+                    }
+                }
+
+                var fileResult = db.SingleById<FileScan>(lastFileId);
+                Assert.Equal(lastFileName, fileResult.Name);
+                var folderResult = db.SingleById<FolderScan>(fileResult.ParentFolderId);
+                Assert.Equal(lastFolderName, folderResult.Name);
+            }
+        }        
     }
 }
