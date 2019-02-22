@@ -36,7 +36,7 @@ namespace DetritusThresher.Core.Tests.Models
             using (var db = new NPoco.Database(connection, DatabaseType.SQLite))
             {
                 db.Insert(scan);
-                var result = db.SingleById<Scan>(scan.Id);
+                var result = db.SingleById<Scan>(scan.ScanId);
                 Assert.Equal(name, result.Name);
             }
         }
@@ -54,7 +54,7 @@ namespace DetritusThresher.Core.Tests.Models
             using (var db = new NPoco.Database(connection, DatabaseType.SQLite))
             {
                 db.Insert(scan);
-                var result = db.SingleById<Scan>(scan.Id);
+                var result = db.SingleById<Scan>(scan.ScanId);
                 Assert.Equal(DateTimeKind.Utc, result.ScanCreated.Kind);
                 Assert.Equal(DateTimeKind.Utc, result.ScanFinished?.Kind);
             }

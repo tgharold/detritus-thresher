@@ -11,7 +11,7 @@ namespace DetritusThresher.Migrations.Migrations
             // https://fluentmigrator.github.io/articles/multi-db-support.html
 
             Create.Table("Scans")
-                .WithColumn("Id")
+                .WithColumn("ScanId")
                     .AsInt32()
                     .PrimaryKey()
                     .Identity()
@@ -25,10 +25,13 @@ namespace DetritusThresher.Migrations.Migrations
                 .WithColumn("ScanFinished")
                     .AsDateTime()
                     .Nullable()
+                .WithColumn("StartingFolderId")
+                    .AsInt64()
+                    .Nullable()
                 ;
 
             Create.Table("FolderScans")
-                .WithColumn("Id")
+                .WithColumn("FolderScanId")
                     .AsInt64()
                     .PrimaryKey()
                     .Identity()
@@ -60,7 +63,7 @@ namespace DetritusThresher.Migrations.Migrations
                 ;
 
             Create.Table("FileScans")
-                .WithColumn("Id")
+                .WithColumn("FileScanId")
                     .AsInt64()
                     .PrimaryKey()
                     .Identity()
