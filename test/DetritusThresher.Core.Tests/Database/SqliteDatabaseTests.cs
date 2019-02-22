@@ -8,23 +8,23 @@ namespace DetritusThresher.Core.Tests.Database
     [Collection(CollectionFixtureNames.Sqlite)]
     public class SqliteDatabaseTests : IDisposable
     {
-        private readonly DbConnection _db;
+        private readonly DbConnection connection;
 
         public SqliteDatabaseTests(SqliteFixture fixture)
         {
-            _db = fixture.GetConnection();
-            _db.Open();
+            connection = fixture.GetConnection();
+            connection.Open();
         }
 
         public void Dispose()
         {
-            _db.Dispose();
+            connection.Dispose();
         }
 
         [Fact]
         public void CanReadVersionTable()
         {
-            var cmd = _db.CreateCommand();
+            var cmd = connection.CreateCommand();
             string sqlStatement = "SELECT Description FROM VersionInfo";
             cmd.CommandText = sqlStatement;
             var result = cmd.ExecuteScalar().ToString();

@@ -6,6 +6,7 @@ using DetritusThresher.Migrations.Migrations;
 using DetritusThresher.Core.Database;
 using FluentMigrator.Runner;
 using System.Data.Common;
+using Microsoft.Data.Sqlite;
 
 namespace DetritusThresher.Core.Tests.Xunit
 {
@@ -15,8 +16,11 @@ namespace DetritusThresher.Core.Tests.Xunit
 
         public SqliteFixture()
         {
-            var dbName = Guid.NewGuid().ToString();
-            var connString = $"Data Source=file:mem-{dbName}?mode=memory&cache=shared";
+            var dbName = $"mem-{Guid.NewGuid().ToString()}";
+            var csb = new SqliteConnectionStringBuilder();
+            csb.Cache = SqliteCacheMode.Shared;
+            csb.Mode = SqliteOpenMode.Memory;
+            var connString = csb.ConnectionString;
 
             _database = new SqliteDatabase(connString);
 
