@@ -18,6 +18,7 @@ namespace DetritusThresher.Core.Tests.Xunit
         {
             var dbName = $"mem-{Guid.NewGuid().ToString()}";
             var csb = new SqliteConnectionStringBuilder();
+            csb.DataSource = dbName;
             csb.Cache = SqliteCacheMode.Shared;
             csb.Mode = SqliteOpenMode.Memory;
             var connString = csb.ConnectionString;
