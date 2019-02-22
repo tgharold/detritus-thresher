@@ -49,12 +49,14 @@ namespace DetritusThresher.Core.Tests.Models
 
             var name = $"test message: {nameof(CanGetBackKindUtcFromCreated)} {DateTimeOffset.UtcNow.Ticks}";
             var scan = ModelBuilders.CreateScan(name);
+            scan.ScanFinished = new DateTime(2018, 12, 13, 22, 55, 43, DateTimeKind.Utc);
         
             using (var db = new NPoco.Database(connection, DatabaseType.SQLite))
             {
                 db.Insert(scan);
                 var result = db.SingleById<Scan>(scan.Id);
                 Assert.Equal(DateTimeKind.Utc, result.ScanCreated.Kind);
+                Assert.Equal(DateTimeKind.Utc, result.ScanFinished?.Kind);
             }
         }
     }
