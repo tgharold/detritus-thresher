@@ -26,26 +26,45 @@ namespace DetritusThresher.Core.Tests.Models
         }
 #pragma warning restore xUnit1013 // Public method should be marked as test
 
+        private LogEntry CreateLogEntry(
+            string message, 
+            LogSeverity logSeverity = LogSeverity.Debug,
+            string logCategory = LogCategory.System
+            )
+        {
+            return new LogEntry
+            {
+                Severity = (int)logSeverity,
+                SeverityName = logSeverity.ToString(),
+                Category = logCategory,
+                Message = message
+            };
+        }
+
         [Fact]
         public void CanCreateAndSave()
         {
             var testMessage = $"test message: {nameof(CanCreateAndSave)} {DateTimeOffset.UtcNow.Ticks}";
-            var logEntry = new LogEntry
-            {
-                Severity = (int)LogSeverity.Debug,
-                SeverityName = LogSeverity.Debug.ToString(),
-                Category = LogCategory.System,
-                Message = testMessage
-            };
-            Assert.NotNull(logEntry);   
+            var logEntry = CreateLogEntry(testMessage);
         
             using (var db = new NPoco.Database(connection, DatabaseType.SQLite))
             {
                 db.Insert(logEntry);
-
                 var result = db.SingleById<LogEntry>(logEntry.Id);
                 Assert.Equal(testMessage, result.Message);
+            }
+        }
 
+        [Fact]
+        public void CanGetBackKindUtcFromCreated()
+        {
+            var testMessage = $"test message: {nameof(CanGetBackKindUtcFromCreated)} {DateTimeOffset.UtcNow.Ticks}";
+            var logEntry = CreateLogEntry(testMessage);
+        
+            using (var db = new NPoco.Database(connection, DatabaseType.SQLite))
+            {
+                db.Insert(logEntry);
+                var result = db.SingleById<LogEntry>(logEntry.Id);
                 Assert.Equal(DateTimeKind.Utc, result.Created.Value.Kind);
             }
         }
