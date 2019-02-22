@@ -25,8 +25,25 @@ namespace DetritusThresher.Core.Tests.Models
         }
 #pragma warning restore xUnit1013 // Public method should be marked as test
 
+
+        [Fact]
+        public void CanCreateAndSave()
+        {
+            var scanName = $"test scanName: {nameof(CanCreateAndSave)} {DateTimeOffset.UtcNow.Ticks}";
+            var name = $"test name: {nameof(CanCreateAndSave)} {DateTimeOffset.UtcNow.Ticks}";
+            var uri = $"test URI: {nameof(CanCreateAndSave)} {DateTimeOffset.UtcNow.Ticks}";
+
+            var scan = ModelBuilders.CreateScan(scanName);
+            var item = ModelBuilders.CreateFolderScan(name, uri);
         
-
-
+            using (var db = new NPoco.Database(connection, DatabaseType.SQLite))
+            {
+                db.Insert(scan);
+                item.ScanId = scan.Id;
+                db.Insert(item);
+                var result = db.SingleById<FolderScan>(item.Id);
+                Assert.Equal(name, result.Name);
+            }
+        }
     }
 }

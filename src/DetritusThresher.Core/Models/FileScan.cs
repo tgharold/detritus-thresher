@@ -7,7 +7,7 @@ namespace DetritusThresher.Core.Models
     public class FileScan
     {
         public long Id { get; set; }
-        public long FolderScanId { get; set; }
+        public long ParentFolderId { get; set; }
         public int ScanId { get; set; }
 
         public string Uri { get; set; }
@@ -18,8 +18,8 @@ namespace DetritusThresher.Core.Models
         public DateTime? Created { get; set; }
         public DateTime? Modified { get; set; }
 
-        public string BeginningHashSha256 { get; set; }
-        public string CompleteHashSha256 { get; set; }
+        //public string BeginningHashSha256 { get; set; }
+        //public string CompleteHashSha256 { get; set; }
 
         public DateTime ScanCreated { get; set; } = DateTime.UtcNow;
         public DateTime? ScanFinished { get; set; }

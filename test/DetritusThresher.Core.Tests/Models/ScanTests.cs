@@ -42,7 +42,7 @@ namespace DetritusThresher.Core.Tests.Models
         }
 
         [Fact]
-        public void CanGetBackKindUtcFromCreated()
+        public void CanGetBackKindUtcFromDatabase()
         {
             // Microsoft.Data.Sqlite (as of 2.2.2) has problems storing/retrieving DateTime values as kind UTC
             // https://system.data.sqlite.org/ -- works fine and returns UTC timestamp
@@ -51,7 +51,7 @@ namespace DetritusThresher.Core.Tests.Models
             // The fix for this is adding "datetimekind=Utc" to the connetion string
             // "data source=\"file:mem-073d7ec1-528a-4482-8264-caf718d4fc06?mode=memory&cache=shared\";datetimekind=Utc"
 
-            var name = $"test message: {nameof(CanGetBackKindUtcFromCreated)} {DateTimeOffset.UtcNow.Ticks}";
+            var name = $"test message: {nameof(CanGetBackKindUtcFromDatabase)} {DateTimeOffset.UtcNow.Ticks}";
             var scan = ModelBuilders.CreateScan(name);
             scan.ScanFinished = new DateTime(2018, 12, 13, 22, 55, 43, DateTimeKind.Utc);
         
