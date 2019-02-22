@@ -1,8 +1,8 @@
 using System;
 using System.Data.Common;
+using System.Data.SQLite;
 using System.Transactions;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Data.Sqlite;
 using NPoco;
 
 namespace DetritusThresher.Core.Database
@@ -14,14 +14,14 @@ namespace DetritusThresher.Core.Database
         /// is closed. We use a hidden connection variable to keep the database
         /// intact until we no longer need it.
         /// </summary>
-        private SqliteConnection _holdOpenConnection;
+        private SQLiteConnection _holdOpenConnection;
 
         // Sqlite in-memory: https://www.sqlite.org/inmemorydb.html
         // Use a "named" memory string with shared cache.
 
         public SqliteDatabase(string connectionString)
         {
-            _holdOpenConnection = new SqliteConnection(connectionString);
+            _holdOpenConnection = new SQLiteConnection(connectionString);
             _holdOpenConnection.Open();
         }
 
@@ -33,7 +33,7 @@ namespace DetritusThresher.Core.Database
         public DbConnection GetConnection()
         {
             var connectionString = _holdOpenConnection.ConnectionString;
-            return new SqliteConnection(connectionString);
+            return new SQLiteConnection(connectionString);
         }
 
         #region IDisposable Support
