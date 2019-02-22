@@ -1,2 +1,0 @@
-# DetritusThresher.Testing
-
