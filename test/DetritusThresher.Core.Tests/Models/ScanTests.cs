@@ -1,6 +1,5 @@
 using System;
 using System.Data.Common;
-using DetritusThresher.Core.Constants;
 using DetritusThresher.Core.Models;
 using DetritusThresher.Core.Tests.Xunit;
 using NPoco;
@@ -9,11 +8,11 @@ using Xunit;
 namespace DetritusThresher.Core.Tests.Models
 {
     [Collection(CollectionFixtureNames.Sqlite)]
-    public class LogEntryTests
+    public class ScanTests
     {
         private readonly DbConnection connection;
 
-        public LogEntryTests(SqliteFixture fixture)
+        public ScanTests(SqliteFixture fixture)
         {
             connection = fixture.GetConnection();
             connection.Open();
@@ -26,32 +25,27 @@ namespace DetritusThresher.Core.Tests.Models
         }
 #pragma warning restore xUnit1013 // Public method should be marked as test
 
-        private LogEntry CreateLogEntry(
-            string message, 
-            LogSeverity logSeverity = LogSeverity.Debug,
-            string logCategory = LogCategory.System
+        private Scan CreateScan(
+            string name
             )
         {
-            return new LogEntry
+            return new Scan
             {
-                Severity = (int)logSeverity,
-                SeverityName = logSeverity.ToString(),
-                Category = logCategory,
-                Message = message
+                Name = name
             };
         }
 
         [Fact]
         public void CanCreateAndSave()
         {
-            var testMessage = $"test message: {nameof(CanCreateAndSave)} {DateTimeOffset.UtcNow.Ticks}";
-            var logEntry = CreateLogEntry(testMessage);
+            var name = $"test name: {nameof(CanCreateAndSave)} {DateTimeOffset.UtcNow.Ticks}";
+            var scan = CreateScan(name);
         
             using (var db = new NPoco.Database(connection, DatabaseType.SQLite))
             {
-                db.Insert(logEntry);
-                var result = db.SingleById<LogEntry>(logEntry.Id);
-                Assert.Equal(testMessage, result.Message);
+                db.Insert(scan);
+                var result = db.SingleById<Scan>(scan.Id);
+                Assert.Equal(name, result.Name);
             }
         }
 
@@ -61,14 +55,14 @@ namespace DetritusThresher.Core.Tests.Models
             // Microsoft.Data.Sqlite has problems storing/retrieving DateTime values as kind UTC
             // https://system.data.sqlite.org/ -- works fine
 
-            var testMessage = $"test message: {nameof(CanGetBackKindUtcFromCreated)} {DateTimeOffset.UtcNow.Ticks}";
-            var logEntry = CreateLogEntry(testMessage);
+            var name = $"test message: {nameof(CanGetBackKindUtcFromCreated)} {DateTimeOffset.UtcNow.Ticks}";
+            var scan = CreateScan(name);
         
             using (var db = new NPoco.Database(connection, DatabaseType.SQLite))
             {
-                db.Insert(logEntry);
-                var result = db.SingleById<LogEntry>(logEntry.Id);
-                Assert.Equal(DateTimeKind.Utc, result.Created.Value.Kind);
+                db.Insert(scan);
+                var result = db.SingleById<Scan>(scan.Id);
+                Assert.Equal(DateTimeKind.Utc, result.ScanCreated.Kind);
             }
         }
     }

@@ -7,6 +7,8 @@ namespace DetritusThresher.Core.Models
     public class Scan
     {
         public int Id { get; set; }
+
+        public string Name { get; set; }
         
         public DateTime ScanCreated { get; set; } = DateTime.UtcNow;
         public DateTime? ScanFinished { get; set; }
