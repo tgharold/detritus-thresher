@@ -32,6 +32,20 @@ namespace DetritusThresher.Migrations.Migrations
                     .AsString()
                     .Nullable()
                 ;
+
+            Create.Table("Scans")
+                .WithColumn("Id")
+                    .AsInt32()
+                    .PrimaryKey()
+                    .Identity()
+                .WithColumn("ScanCreated")
+                    .AsDateTime()
+                    .NotNullable()
+                    .WithDefaultValue(SystemMethods.CurrentDateTime)
+                .WithColumn("ScanFinished")
+                    .AsDateTime()
+                    .Nullable()
+                ;
         }
     }
 }
