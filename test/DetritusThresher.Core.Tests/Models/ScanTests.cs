@@ -25,21 +25,13 @@ namespace DetritusThresher.Core.Tests.Models
         }
 #pragma warning restore xUnit1013 // Public method should be marked as test
 
-        private Scan CreateScan(
-            string name
-            )
-        {
-            return new Scan
-            {
-                Name = name
-            };
-        }
+
 
         [Fact]
         public void CanCreateAndSave()
         {
             var name = $"test name: {nameof(CanCreateAndSave)} {DateTimeOffset.UtcNow.Ticks}";
-            var scan = CreateScan(name);
+            var scan = ModelBuilders.CreateScan(name);
         
             using (var db = new NPoco.Database(connection, DatabaseType.SQLite))
             {
@@ -56,7 +48,7 @@ namespace DetritusThresher.Core.Tests.Models
             // https://system.data.sqlite.org/ -- works fine and returns UTC timestamp
 
             var name = $"test message: {nameof(CanGetBackKindUtcFromCreated)} {DateTimeOffset.UtcNow.Ticks}";
-            var scan = CreateScan(name);
+            var scan = ModelBuilders.CreateScan(name);
         
             using (var db = new NPoco.Database(connection, DatabaseType.SQLite))
             {
