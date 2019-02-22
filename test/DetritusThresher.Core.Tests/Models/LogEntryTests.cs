@@ -58,6 +58,9 @@ namespace DetritusThresher.Core.Tests.Models
         [Fact]
         public void CanGetBackKindUtcFromCreated()
         {
+            // Microsoft.Data.Sqlite has problems storing/retrieving DateTime values as kind UTC
+            // https://system.data.sqlite.org/ -- works fine
+
             var testMessage = $"test message: {nameof(CanGetBackKindUtcFromCreated)} {DateTimeOffset.UtcNow.Ticks}";
             var logEntry = CreateLogEntry(testMessage);
         
