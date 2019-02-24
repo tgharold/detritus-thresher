@@ -1,5 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <ItemGroup>
+    <ProjectReference Include="..\DetritusThresher.Migrations\DetritusThresher.Migrations.csproj" />
+    <ProjectReference Include="..\DetritusThresher.Core\DetritusThresher.Core.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
