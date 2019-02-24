@@ -25,6 +25,38 @@ namespace DetritusThresher.Core.Database
             _holdOpenConnection.Open();
         }
 
+        public enum DatabaseType
+        {
+            Memory,
+            Temporary,
+            File
+        }
+
+        public SqliteDatabase(
+            string dbName,
+            DatabaseType databaseType
+            )
+        {
+            var csb = new SQLiteConnectionStringBuilder();
+
+            switch (databaseType)
+            {
+                case DatabaseType.Memory: 
+                    csb.DataSource = $"file:{dbName}?mode=memory&cache=shared";
+                    break;
+                
+                default:
+                    csb.DataSource = $"file:{dbName}?cache=shared";
+                    break;
+            }
+            
+            csb.DateTimeKind = DateTimeKind.Utc;
+            var connectionString = csb.ConnectionString;
+
+            _holdOpenConnection = new SQLiteConnection(connectionString);
+            _holdOpenConnection.Open();
+        }
+
         public string GetConnectionString()
         {
             return _holdOpenConnection.ConnectionString;
