@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.4.3" />
     <PackageReference Include="fluentmigrator" Version="3.1.3" />
     <ProjectReference Include="..\DetritusThresher.Migrations\DetritusThresher.Migrations.csproj" />
     <ProjectReference Include="..\DetritusThresher.Core\DetritusThresher.Core.csproj" />
