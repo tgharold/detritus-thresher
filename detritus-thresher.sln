@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DetritusThresher.Core.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DetritusThresher.Migrations.Tests", "test\DetritusThresher.Migrations.Tests\DetritusThresher.Migrations.Tests.csproj", "{E54B2C91-6682-4C2E-B397-3E5D0A09610A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DetritusThresher.ConsoleScanner", "src\DetritusThresher.ConsoleScanner\DetritusThresher.ConsoleScanner.csproj", "{BEBE1BC0-56CA-46F5-AFD5-63C28306D351}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +92,18 @@ Global
 		{E54B2C91-6682-4C2E-B397-3E5D0A09610A}.Release|x64.Build.0 = Release|Any CPU
 		{E54B2C91-6682-4C2E-B397-3E5D0A09610A}.Release|x86.ActiveCfg = Release|Any CPU
 		{E54B2C91-6682-4C2E-B397-3E5D0A09610A}.Release|x86.Build.0 = Release|Any CPU
+		{BEBE1BC0-56CA-46F5-AFD5-63C28306D351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEBE1BC0-56CA-46F5-AFD5-63C28306D351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEBE1BC0-56CA-46F5-AFD5-63C28306D351}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BEBE1BC0-56CA-46F5-AFD5-63C28306D351}.Debug|x64.Build.0 = Debug|Any CPU
+		{BEBE1BC0-56CA-46F5-AFD5-63C28306D351}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BEBE1BC0-56CA-46F5-AFD5-63C28306D351}.Debug|x86.Build.0 = Debug|Any CPU
+		{BEBE1BC0-56CA-46F5-AFD5-63C28306D351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEBE1BC0-56CA-46F5-AFD5-63C28306D351}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEBE1BC0-56CA-46F5-AFD5-63C28306D351}.Release|x64.ActiveCfg = Release|Any CPU
+		{BEBE1BC0-56CA-46F5-AFD5-63C28306D351}.Release|x64.Build.0 = Release|Any CPU
+		{BEBE1BC0-56CA-46F5-AFD5-63C28306D351}.Release|x86.ActiveCfg = Release|Any CPU
+		{BEBE1BC0-56CA-46F5-AFD5-63C28306D351}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FE4AE96F-C66B-4EE0-9FC4-AFFBED5A67BC} = {FF9EDC2A-3286-4715-A24D-3BBF810037EB}
@@ -97,5 +111,6 @@ Global
 		{35668B78-B806-4DCD-865F-F7EAE0E9D9E0} = {FF9EDC2A-3286-4715-A24D-3BBF810037EB}
 		{B2760D43-88CE-4945-B746-7A6F22B2761D} = {5E0F797F-6BD8-4A53-87CA-64798A9F6A28}
 		{E54B2C91-6682-4C2E-B397-3E5D0A09610A} = {5E0F797F-6BD8-4A53-87CA-64798A9F6A28}
+		{BEBE1BC0-56CA-46F5-AFD5-63C28306D351} = {FF9EDC2A-3286-4715-A24D-3BBF810037EB}
 	EndGlobalSection
 EndGlobal
