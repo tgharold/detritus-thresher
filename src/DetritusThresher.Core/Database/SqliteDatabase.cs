@@ -42,11 +42,11 @@ namespace DetritusThresher.Core.Database
             switch (databaseType)
             {
                 case DatabaseType.Memory: 
-                    csb.DataSource = $"file:{dbName}?mode=memory&cache=shared";
+                    csb.FullUri = $"file:{dbName}?mode=memory&cache=shared";
                     break;
                 
                 default:
-                    csb.DataSource = $"file:{dbName}?cache=shared";
+                    csb.DataSource = dbName;
                     break;
             }
             
