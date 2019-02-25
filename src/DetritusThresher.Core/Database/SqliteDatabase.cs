@@ -1,6 +1,7 @@
 using System;
 using System.Data.Common;
 using System.Data.SQLite;
+using System.IO;
 using System.Transactions;
 using Microsoft.Extensions.DependencyInjection;
 using NPoco;
@@ -31,22 +32,24 @@ namespace DetritusThresher.Core.Database
             SqliteDatabaseType databaseType
             )
         {
-            var csb = new SQLiteConnectionStringBuilder();
 
+            string connectionString;
             switch (databaseType)
             {
                 case Memory: 
-                    csb.FullUri = $"file:{dbName}?mode=memory&cache=shared";
+                    // Can't seem to use the CSB for in-memory databases, will need to hard-code conn-string
+                    // See GetKeyValuePair() in System.Data.Common.DbConnectionOptions
+                    connectionString = $"Data Source=file:{dbName}?mode=memory&cache=shared;datetimekind=Utc";
                     break;
                 
                 default:
+                    var csb = new SQLiteConnectionStringBuilder();
                     csb.DataSource = dbName;
+                    csb.DateTimeKind = DateTimeKind.Utc;
+                    connectionString = csb.ConnectionString;
                     break;
             }
             
-            csb.DateTimeKind = DateTimeKind.Utc;
-            var connectionString = csb.ConnectionString;
-
             _holdOpenConnection = new SQLiteConnection(connectionString);
             _holdOpenConnection.Open();
         }
