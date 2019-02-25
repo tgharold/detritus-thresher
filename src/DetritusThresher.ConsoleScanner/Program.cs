@@ -14,15 +14,15 @@ namespace DetritusThresher.ConsoleScanner
         static int Main(string[] args)
         {
             Console.WriteLine("DetritusThresher.ConsoleScanner");
+
             return CommandLine.Parser.Default.ParseArguments<
-                ScanOptions,
-                ReportOptions
-                >(args)
-                .MapResult(
+                    ScanOptions,
+                    ReportOptions
+                >(args).MapResult(
                     (ScanOptions opts) => RunScanAndReturnExitCode(opts),
                     (ReportOptions opts) => RunReportAndReturnExitCode(opts),
                     errs => 1
-                    );
+                );
         }
 
         private static int RunScanAndReturnExitCode(ScanOptions opts)
