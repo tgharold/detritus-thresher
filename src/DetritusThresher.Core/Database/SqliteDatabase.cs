@@ -4,6 +4,7 @@ using System.Data.SQLite;
 using System.Transactions;
 using Microsoft.Extensions.DependencyInjection;
 using NPoco;
+using static DetritusThresher.Core.Database.SqliteDatabaseType;
 
 namespace DetritusThresher.Core.Database
 {
@@ -25,23 +26,16 @@ namespace DetritusThresher.Core.Database
             _holdOpenConnection.Open();
         }
 
-        public enum DatabaseType
-        {
-            Memory,
-            Temporary,
-            File
-        }
-
         public SqliteDatabase(
             string dbName,
-            DatabaseType databaseType
+            SqliteDatabaseType databaseType
             )
         {
             var csb = new SQLiteConnectionStringBuilder();
 
             switch (databaseType)
             {
-                case DatabaseType.Memory: 
+                case Memory: 
                     csb.FullUri = $"file:{dbName}?mode=memory&cache=shared";
                     break;
                 
