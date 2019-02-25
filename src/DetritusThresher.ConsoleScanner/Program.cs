@@ -4,36 +4,35 @@ using FluentMigrator;
 using DetritusThresher.Core.Database;
 using FluentMigrator.Runner;
 using DetritusThresher.Migrations.Migrations;
+using DetritusThresher.ConsoleScanner.Options;
+using CommandLine;
 
 namespace DetritusThresher.ConsoleScanner
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
             Console.WriteLine("DetritusThresher.ConsoleScanner");
+            return CommandLine.Parser.Default.ParseArguments<
+                ScanOptions,
+                ReportOptions
+                >(args)
+                .MapResult(
+                    (ScanOptions opts) => RunScanAndReturnExitCode(opts),
+                    (ReportOptions opts) => RunReportAndReturnExitCode(opts),
+                    errs => 1
+                    );
+        }
 
-            var db = new SqliteDatabase(
-                "foo.sqlite",
-                SqliteDatabase.DatabaseType.Memory
-                );
+        private static int RunScanAndReturnExitCode(ScanOptions opts)
+        {
+            throw new NotImplementedException();
+        }
 
-            var serviceProvider = new ServiceCollection()
-                .AddFluentMigratorCore()
-                .ConfigureRunner(
-                    builder => builder
-                        .AddSQLite()
-                        .WithGlobalConnectionString(db.GetConnectionString())
-                        .WithMigrationsIn(typeof(InitialMigration).Assembly))
-                .BuildServiceProvider();
-
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
-                runner.MigrateUp();
-            }            
-
-            Console.WriteLine("Setup database.");
+        private static int RunReportAndReturnExitCode(ReportOptions opts)
+        {
+            throw new NotImplementedException();
         }
     }
 }
