@@ -18,12 +18,17 @@ namespace DetritusThresher.Core.Tests.Xunit
         public SqliteFixture()
         {
             var dbName = $"mem-{Guid.NewGuid().ToString()}";
-            //var connString = $"Data Source=file:{dbName}?mode=memory&cache=shared";
-
+            
             var csb = new SQLiteConnectionStringBuilder();
             csb.FullUri = $"file:{dbName}?mode=memory&cache=shared";
             csb.DateTimeKind = DateTimeKind.Utc;
-            var connString = csb.ConnectionString;
+            //var connString = csb.ConnectionString;
+            var connString = $"Data Source=file:{dbName}?mode=memory&cache=shared";
+
+            // ConnectionStringBuilder is creating:
+            // "fulluri=\"file:mem-e60d7795-e60f-4ac3-8c0c-26294b1c436b?mode=memory&cache=shared\";datetimekind=Utc"
+            // versuss
+            // "Data Source=file:mem-727643e8-a54a-418e-b698-a0f4a85e54ee?mode=memory&cache=shared"
 
             _database = new SqliteDatabase(connString);
 
