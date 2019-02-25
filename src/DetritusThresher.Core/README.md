@@ -1,5 +1,12 @@
 # DetritusThresher.Core
 
+## Parallel Processing
+
+### Resource links:
+
+- https://docs.microsoft.com/en-us/dotnet/standard/collections/thread-safe/blockingcollection-overview
+
+
 ## SQLite issues
 
 ### In-Memory Databases
