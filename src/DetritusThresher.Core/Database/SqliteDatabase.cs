@@ -1,10 +1,6 @@
 using System;
 using System.Data.Common;
 using System.Data.SQLite;
-using System.IO;
-using System.Transactions;
-using Microsoft.Extensions.DependencyInjection;
-using NPoco;
 using static DetritusThresher.Core.Database.SqliteDatabaseType;
 
 namespace DetritusThresher.Core.Database

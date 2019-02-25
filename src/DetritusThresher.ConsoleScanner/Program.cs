@@ -1,9 +1,4 @@
 ﻿using System;
-using Microsoft.Extensions.DependencyInjection;
-using FluentMigrator;
-using DetritusThresher.Core.Database;
-using FluentMigrator.Runner;
-using DetritusThresher.Migrations.Migrations;
 using DetritusThresher.ConsoleScanner.Options;
 using CommandLine;
 

@@ -1,13 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
-using FluentMigrator;
 using System;
-using Xunit;
 using DetritusThresher.Migrations.Migrations;
 using DetritusThresher.Core.Database;
 using FluentMigrator.Runner;
 using System.Data.Common;
 using System.Data.SQLite;
-using System.Data;
 
 namespace DetritusThresher.Core.Tests.Xunit
 {

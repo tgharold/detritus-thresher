@@ -1,5 +1,4 @@
 using Xunit;
-using  DetritusThresher.Core.Tests.Xunit;
 
 namespace DetritusThresher.Core.Tests.Xunit.Tests
 {
