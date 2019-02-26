@@ -12,7 +12,7 @@ namespace DetritusThresher.Core.Database
         /// is closed. We use a hidden connection variable to keep the database
         /// intact until we no longer need it.
         /// </summary>
-        private SQLiteConnection _holdOpenConnection;
+        private readonly SQLiteConnection _holdOpenConnection;
 
         // Sqlite in-memory: https://www.sqlite.org/inmemorydb.html
         // Use a "named" memory string with shared cache.
@@ -28,21 +28,29 @@ namespace DetritusThresher.Core.Database
             SqliteDatabaseType databaseType
             )
         {
-
             string connectionString;
+
             switch (databaseType)
             {
                 case Memory: 
                     // Can't seem to use the CSB for in-memory databases, will need to hard-code conn-string
                     // See GetKeyValuePair() in System.Data.Common.DbConnectionOptions
-                    connectionString = $"Data Source=file:{dbName}?mode=memory&cache=shared;datetimekind=Utc";
+                    connectionString = $"Data Source=file:{dbName}?mode=memory&cache=shared;DateTimeKind=Utc";
                     break;
-                
-                default:
+
+                case Temporary:
+                    throw new NotImplementedException();
+                    break;
+
+                case File:
                     var csb = new SQLiteConnectionStringBuilder();
                     csb.DataSource = dbName;
                     csb.DateTimeKind = DateTimeKind.Utc;
                     connectionString = csb.ConnectionString;
+                    break;
+                
+                default:
+                    throw new NotImplementedException();
                     break;
             }
             
