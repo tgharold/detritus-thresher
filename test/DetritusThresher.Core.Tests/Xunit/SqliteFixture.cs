@@ -1,8 +1,5 @@
-using Microsoft.Extensions.DependencyInjection;
 using System;
-using DetritusThresher.Migrations.Migrations;
 using DetritusThresher.Core.Database;
-using FluentMigrator.Runner;
 using System.Data.Common;
 using System.Data.SQLite;
 
@@ -29,21 +26,7 @@ namespace DetritusThresher.Core.Tests.Xunit
             // "Data Source=file:mem-727643e8-a54a-418e-b698-a0f4a85e54ee?mode=memory&cache=shared"
 
             _database = new SqliteDatabase(connString);
-
-            var serviceProvider = new ServiceCollection()
-                .AddFluentMigratorCore()
-                .ConfigureRunner(
-                    builder => builder
-                        .AddSQLite()
-                        .WithGlobalConnectionString(connString)
-                        .WithMigrationsIn(typeof(InitialMigration).Assembly))
-                .BuildServiceProvider();
-
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
-                runner.MigrateUp();
-            }
+            MigratorHelper.RunSqliteMigrations(connString);
         }
 
         public DbConnection GetConnection()

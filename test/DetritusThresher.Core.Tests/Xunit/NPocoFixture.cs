@@ -1,8 +1,5 @@
-using Microsoft.Extensions.DependencyInjection;
 using System;
-using DetritusThresher.Migrations.Migrations;
 using DetritusThresher.Core.Database;
-using FluentMigrator.Runner;
 using System.Data.SQLite;
 using NPoco;
 
@@ -22,21 +19,7 @@ namespace DetritusThresher.Core.Tests.Xunit
             var connString = csb.ConnectionString;
 
             _database = new SqliteDatabase(connString);
-
-            var serviceProvider = new ServiceCollection()
-                .AddFluentMigratorCore()
-                .ConfigureRunner(
-                    builder => builder
-                        .AddSQLite()
-                        .WithGlobalConnectionString(connString)
-                        .WithMigrationsIn(typeof(InitialMigration).Assembly))
-                .BuildServiceProvider();
-
-            using (var scope = serviceProvider.CreateScope())
-            {
-                var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
-                runner.MigrateUp();
-            }
+            MigratorHelper.RunSqliteMigrations(connString);
         }
 
         public NPoco.Database GetConnection()
