@@ -40,7 +40,6 @@ namespace DetritusThresher.Core.Database
 
                 case Temporary:
                     throw new NotImplementedException();
-                    break;
 
                 case File:
                     var csb = new SQLiteConnectionStringBuilder();
@@ -51,7 +50,6 @@ namespace DetritusThresher.Core.Database
                 
                 default:
                     throw new NotImplementedException();
-                    break;
             }
             
             _holdOpenConnection = new SQLiteConnection(connectionString);
