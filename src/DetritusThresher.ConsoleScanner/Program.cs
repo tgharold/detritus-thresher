@@ -12,12 +12,19 @@ namespace DetritusThresher.ConsoleScanner
 
             return CommandLine.Parser.Default.ParseArguments<
                     ScanOptions,
+                    ResumeOptions,
                     ReportOptions
                 >(args).MapResult(
                     (ScanOptions opts) => RunScanAndReturnExitCode(opts),
+                    (ResumeOptions opts) => RunResumeAndReturnExitCode(opts),
                     (ReportOptions opts) => RunReportAndReturnExitCode(opts),
                     errs => 1
                 );
+        }
+
+        private static int RunResumeAndReturnExitCode(ResumeOptions opts)
+        {
+            throw new NotImplementedException();
         }
 
         private static int RunScanAndReturnExitCode(ScanOptions opts)
